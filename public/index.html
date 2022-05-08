@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>Start FlashCBT</title>
+  </head>
+  <body>
+    <main>
+      <div>
+        <h1>Welcome Back!</h1>
+        <div class="logo">
+          <img src="./Official_JAMB_logo.png" alt="jamb_Logo" />
+        </div>
+
+        <div class="form">
+          <label id="ip-label">Enter Ip Address to Logon to FlashCBT</label>
+          <input
+            type="text"
+            name="ip-address"
+            id="ip-address"
+            placeholder="Example 192.xxx.xxx"
+            autocomplete="additional-name"
+          />
+          <!-- <div class="store-id">
+            <input
+              type="checkbox"
+              id="store-ip"
+              name="store-ip"
+              placeholder="store Ip Address"
+            />
+            <label for="store-ip">Check to remember Ip Address</label>
+          </div> -->
+        </div>
+        <div class="action">
+          <button id="submit">Launch</button>
+        </div>
+      </div>
+    </main>
+    <script src="../scripts/login.js"></script>
+  </body>
+</html>
