@@ -10,21 +10,21 @@ function getMainmenuTemplate() {
         }
     ]
 
-    if (process.env.NODE_ENV !== 'production') {
-        menuTemplate.push({
-            label: 'Developer Tools',
-            submenu: [{
-                label: 'Toggle DevTools',
-                accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
-                click(item, focusedWindow) {
-                    focusedWindow.toggleDevTools();
-                }
-            },
-            {
-                role: 'reload'
-            }]
-        })
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    //     menuTemplate.push({
+    //         label: 'Developer Tools',
+    //         submenu: [{
+    //             label: 'Toggle DevTools',
+    //             accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
+    //             click(item, focusedWindow) {
+    //                 focusedWindow.toggleDevTools();
+    //             }
+    //         },
+    //         {
+    //             role: 'reload'
+    //         }]
+    //     })
+    // }
 
     return menuTemplate;
 

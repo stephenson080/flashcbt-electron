@@ -4,27 +4,49 @@ const getMainmenuTemplate = require('./utils/menuItems')
 app.disableHardwareAcceleration()
 
 let startWindow, browserWindow
-function createWindow() {
 
-    startWindow = new BrowserWindow({
-        height: 600, width: 800, webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
-            enableRemoteModule: true
-        },
-        icon: `${__dirname}/public/jamb-logo.ico`,
-    });
+let isSingleInstance = app.requestSingleInstanceLock()
 
-
-
-    startWindow.loadFile('public/index.html')
-
-    startWindow.webContents.send('getIp', '')
-
-
-    const mainMenu = Menu.buildFromTemplate(getMainmenuTemplate())
-    Menu.setApplicationMenu(mainMenu)
+if (!isSingleInstance) {
+    app.quit()
 }
+
+app.on('second-instance', (e, agr, cwd) => {
+    if (startWindow) {
+        if (startWindow.isMinimized()) startWindow.restore()
+        startWindow.focus()
+    }
+    else if (browserWindow) {
+        if (browserWindow.isMinimized()) browserWindow.restore()
+        browserWindow.focus()
+    }
+    else {
+        return
+    }
+})
+
+// if (app.hasSingleInstanceLock())
+    function createWindow() {
+
+        startWindow = new BrowserWindow({
+            height: 600, width: 800, webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false,
+                enableRemoteModule: true
+            },
+            icon: `${__dirname}/public/jamb-logo.ico`,
+        });
+
+
+
+        startWindow.loadFile('public/index.html')
+
+        startWindow.webContents.send('getIp', '')
+
+
+        const mainMenu = Menu.buildFromTemplate(getMainmenuTemplate())
+        Menu.setApplicationMenu(mainMenu)
+    }
 
 app.whenReady()
     .then(() => {
@@ -39,6 +61,7 @@ app.whenReady()
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
+        app.releaseSingleInstanceLock()
         app.quit()
     }
 })
@@ -64,19 +87,21 @@ ipcMain.on('sendip', function (e, ipAddress) {
             browserWindow.close()
             startWindow.show()
             startWindow.webContents.send('getIp', '')
-            startWindow.webContents.send('error', 'Could not Load page. Please check your connection, check Ip Address and try again.')
+            startWindow.webContents.send('error', 'Could not Load page. Please check your connection, check IP Address and try again.')
         })
         browserWindow.webContents.on('did-finish-load', () => {
             if (startWindow) {
                 startWindow.close()
-                startWindow = null
             }
 
         })
         startWindow.hide()
 
     } catch (err) {
-
+        console.log(err)
+        startWindow.show()
+        startWindow.webContents.send('getIp', '')
+        startWindow.webContents.send('error', 'Could not Load page. Please check your connection, check IP Address and try again.')
     }
 
 })
