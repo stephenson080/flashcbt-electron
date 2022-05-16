@@ -35,7 +35,7 @@ main h1 {
 .form {
   display: flex;
   flex-direction: column;
-  margin: 6px auto;
+  margin: 3px auto;
   width: 100%;
   padding: 15px;
 }
@@ -45,7 +45,7 @@ main h1 {
   border: 2px solid black;
   padding: 6px 8px;
   height: 30px;
-  margin: 20px 0 10px 38px;
+  margin: 20px 0 5px 38px;
 }
 
 .form input[type=checkbox] {

@@ -1,4 +1,4 @@
-const { app, Menu, BrowserWindow, ipcMain } = require('electron')
+const { app, Menu, BrowserWindow, ipcMain, nativeTheme } = require('electron')
 const getMainmenuTemplate = require('./utils/menuItems')
 
 app.disableHardwareAcceleration()
@@ -10,6 +10,8 @@ let isSingleInstance = app.requestSingleInstanceLock()
 if (!isSingleInstance) {
     app.quit()
 }
+
+nativeTheme.themeSource = 'dark'
 
 app.on('second-instance', (e, agr, cwd) => {
     if (startWindow) {
@@ -92,10 +94,10 @@ ipcMain.on('sendip', function (e, ipAddress) {
         browserWindow.webContents.on('did-finish-load', () => {
             if (startWindow) {
                 startWindow.close()
+                startWindow = null
             }
 
         })
-        startWindow.hide()
 
     } catch (err) {
         console.log(err)
