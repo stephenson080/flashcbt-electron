@@ -34,6 +34,12 @@ if (submitBtn) {
     submitBtn.addEventListener('click', logon)
 }
 
+document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter'){
+        logon()
+    }
+})
+
 function createErrorTag(errorText) {
     const errorTag = document.createElement('p')
     errorTag.id = 'error-tag'
@@ -41,7 +47,7 @@ function createErrorTag(errorText) {
     errorTag.innerHTML = errorText
 }
 
-function logon(e) {
+function logon() {
     if (ipAddress) {
         ipAddress.classList.remove('error')
         if (!ipAddress.value) {
